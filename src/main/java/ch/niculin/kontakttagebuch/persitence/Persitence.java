@@ -1,9 +1,24 @@
 package ch.niculin.kontakttagebuch.persitence;
+//TODO comments
 
+import ch.niculin.kontakttagebuch.Entries;
+
+/**
+ *
+ */
 public interface Persitence {
-    void showKontakte();
+    Entries showKontakte();
+
     void initalisieren();
+
     void close();
-    void insertKontakte(String name);
-    void insertKontakte(String name, String datum);
+
+    /**
+     *
+     * @param name
+     * @param surname
+     */
+    void insertKontakte(String name, String surname);
+
+    void insertKontakte(String name, String surname, String datum);
 }

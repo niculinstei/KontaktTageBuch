@@ -7,22 +7,20 @@ import picocli.CommandLine;
 
 public class KontaktTagebuch {
 
-
     public static void main(String[] args) {
-        AnsiConsole.systemInstall();
+
         Persitence peristence = new PeristenceSQL("user.home", "datebase.db");
 
-        try {
-            peristence.initalisieren();
+        peristence.initalisieren();
+        AnsiConsole.systemInstall();
 
-            int exitCode = new CommandLine(new Functions(peristence)).execute(args);
-            System.exit(exitCode);
-            AnsiConsole.systemUninstall();
-
-        } finally {
-            peristence.close();
-        }
+        int exitCode = new CommandLine(new Functions(peristence)).execute(args);
+        AnsiConsole.systemUninstall();
+        peristence.close();
+        System.exit(exitCode);
     }
+
+
 }
 
 
