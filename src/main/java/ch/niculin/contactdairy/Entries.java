@@ -1,4 +1,4 @@
-package ch.niculin.kontakttagebuch;
+package ch.niculin.contactdairy;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ public class Entries {
         this.entries = entries;
         this.color = color;
     }
+
 
     public List<Entry> getEntries() {
         return entries;

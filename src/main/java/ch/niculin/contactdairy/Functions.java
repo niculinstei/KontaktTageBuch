@@ -1,9 +1,10 @@
-package ch.niculin.kontakttagebuch;
+package ch.niculin.contactdairy;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -26,7 +27,15 @@ class Functions implements Callable<Integer> {
         String nameAndSurname;
 
         @Option(names = {"-d", "--date"}, arity = "0..1", required = false, description = "insert date")
-        String dates;
+        LocalDate date;
+
+        public void setNameAndSurname(String nameAndSurname) {
+            this.nameAndSurname = nameAndSurname;
+        }
+
+        public void setDate(LocalDate date) {
+            this.date = date;
+        }
     }
 
     Functions(Logic logic) {

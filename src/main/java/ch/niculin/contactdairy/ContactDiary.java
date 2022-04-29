@@ -1,27 +1,22 @@
-package ch.niculin.kontakttagebuch;
+package ch.niculin.contactdairy;
 
-import ch.niculin.kontakttagebuch.persitence.PeristenceSQL;
-import ch.niculin.kontakttagebuch.persitence.Persitence;
+import ch.niculin.contactdairy.persitence.PersistenceJOOQ;
+import ch.niculin.contactdairy.persitence.Persitence;
 import org.fusesource.jansi.AnsiConsole;
 import picocli.CommandLine;
 
-public class KontaktTagebuch {
+public class ContactDiary {
 
     public static void main(String[] args) {
 
-        Persitence peristence = new PeristenceSQL("user.home", "datebase.db");
+        Persitence peristence = new PersistenceJOOQ("user.home", "datebase.db");
         Logic logic = new Logic(peristence);
-
-        peristence.initalisieren();
-        AnsiConsole.systemInstall();
-
+        peristence.initialise();
         int exitCode = new CommandLine(new Functions(logic)).execute(args);
         AnsiConsole.systemUninstall();
         peristence.close();
         System.exit(exitCode);
     }
-
-
 }
 
 

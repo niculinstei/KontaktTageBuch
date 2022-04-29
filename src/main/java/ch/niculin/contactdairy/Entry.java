@@ -1,17 +1,19 @@
-package ch.niculin.kontakttagebuch;
+package ch.niculin.contactdairy;
+
+import java.time.LocalDate;
 
 public class Entry {
     private final String name;
     private final String surname;
-    private final String date;
+    private final LocalDate date;
 
-    public Entry(String name, String surname, String date){
+    public Entry(LocalDate date, String name, String surname){
         this.name = name;
         this.surname = surname;
         this.date = date;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

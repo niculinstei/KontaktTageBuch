@@ -1,4 +1,4 @@
-package ch.niculin.kontakttagebuch;
+package ch.niculin.contactdairy;
 
 public enum Color {
     YELLOW,

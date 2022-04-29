@@ -1,10 +1,11 @@
 plugins {
     id 'java'
     id 'application'
+    id 'nu.studer.jooq' version '7.1.1'
 }
 
 
-group 'org.example'
+group 'ch.niculin.contactdiary'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -14,20 +15,22 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
     implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
     implementation 'info.picocli:picocli:4.6.3'
-    // https://mvnrepository.com/artifact/org.fusesource.jansi/jansi
     implementation 'org.fusesource.jansi:jansi:2.4.0'
-
+    implementation 'org.jooq:jooq-codegen-maven:3.16.6'
+    implementation 'org.jooq:jooq:3.16.6'
+    implementation 'org.jooq:jooq-meta:3.16.6'
+    jooqGenerator 'org.xerial:sqlite-jdbc:3.36.0.3'
 }
 
+mainClassName = 'ch.niculin.contactdiary.ContactDiary'
 //https://stackoverflow.com/questions/43611525/gradle-no-main-class-specified-even-though-main-class-exists
 
-mainClassName = 'ch.niculin.kontakttagebuch.KontaktTagebuch'
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
-        attributes 'Main-Class': 'ch.niculin.kontakttagebuch.KontaktTagebuch'
+        attributes 'Main-Class': 'ch.niculin.contactdiary.ContactDiary'
     }
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
@@ -36,4 +39,34 @@ jar {
 
 test {
     useJUnitPlatform()
+}
+
+jooq {
+    configurations {
+        main {  // name of the jOOQ configuration
+            generateSchemaSourceOnCompilation = true  // default (can be omitted)
+
+            generationTool {
+
+                jdbc {
+                    driver = 'org.sqlite.JDBC'
+                    url = 'jdbc:sqlite:C:\\Users\\nicustei\\datebase.db'
+                }
+
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.sqlite.SQLiteDatabase'
+                        includes = '.*'
+                        //inputSchema = '[your database schema / owner / name]'
+                    }
+                    generate {}
+                    target {
+                        packageName = 'ch.niculin.contactdairy.jooq'
+                        directory = 'C:\\Users\\nicustei\\OneDrive - Ergon Informatik AG\\Dokumente\\ergon\\Projekte\\Java_Projekte\\KontaktTageBuch\\src\\main\\java\\ch\\niculin\\contactdairy\\jooq'
+                    }
+                }
+            }
+        }
+    }
 }
